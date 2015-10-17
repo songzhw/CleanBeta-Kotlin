@@ -18,6 +18,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 public class SplashActivity : BaseActivity() {
+    val jumpObservable : BehaviorSubject<Void> = BehaviorSubject.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +41,18 @@ public class SplashActivity : BaseActivity() {
                         { resp : SplashResponse ->
                             var imageLoader = ImageLoader.getInstance()
                             imageLoader.displayImage(resp.splashUrl, iv_splash_ad)
+                            jumpObservable.onNext(null) // go to the home page
                          },
                         {error ->
                             showToast(error.getMessage().toString())
                         })
+
+        jumpObservable.asObservable()
+                .delay(2, TimeUnit.SECONDS)
+                .subscribe{
+                    jump(HomeActivity::class.java)
+                    this.finish()
+                }
 
 
     }

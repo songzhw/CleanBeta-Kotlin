@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_toolbar"/>
+
+    <android.support.v4.widget.DrawerLayout
+         android:layout_width="match_parent" android:layout_height="match_parent">
+
+        <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+            <include layout="@layout/view_home_content"/>
+        </FrameLayout>
+
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+            android:layout_gravity="start" android:background="#fff"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MENU" android:textColor="#000"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
+</LinearLayout>
