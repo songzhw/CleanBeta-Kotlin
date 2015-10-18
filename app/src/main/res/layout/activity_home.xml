@@ -3,19 +3,21 @@
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/view_toolbar"/>
+    <include layout="@layout/view_toolbar" android:id="@+id/topHome"/>
 
     <android.support.v4.widget.DrawerLayout
-         android:layout_width="match_parent" android:layout_height="match_parent">
+        android:layout_width="match_parent" android:layout_height="match_parent">
 
+        <!-- content -->
         <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
-            <include layout="@layout/view_home_content"/>
+            <android.support.v4.view.ViewPager android:id="@+id/vp_home" android:layout_width="fill_parent" android:layout_height="170dp"/>
         </FrameLayout>
 
+        <!-- menu -->
         <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
             android:layout_gravity="start" android:background="#fff"
             >
-            <TextView
+            <TextView android:id="@+id/tvHomeMenuTest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="MENU" android:textColor="#000"/>
