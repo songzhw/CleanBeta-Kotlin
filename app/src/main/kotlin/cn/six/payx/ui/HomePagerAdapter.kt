@@ -42,9 +42,13 @@ public class HomePagerAdapter(var ctx : Context) : PagerAdapter(){
 
         var index = position % data.size()
         var item = data[index]
+        println("szw initItem() item = "+item)
 
-        var view : ImageView = inflater.inflate(R.layout.view_single_image, null) as ImageView
-        imageLoader.displayImage(item.bannerImgUrl, view)
+        var view  = inflater.inflate(R.layout.view_single_image, null)
+        var iv : ImageView = view.findViewById(R.id.iv_single_image) as ImageView
+        imageLoader.displayImage(item.bannerImgUrl, iv)
+
+        container?.addView(view)
 
         return view;
     }
