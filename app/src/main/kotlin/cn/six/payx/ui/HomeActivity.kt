@@ -36,6 +36,9 @@ public class HomeActivity : BaseActivity(){
                     {resp : HomeResponse ->
                         adapter.data = resp.banners
                         adapter.notifyDataSetChanged()
+
+                        var firstIndex = adapter.getFirstItemIndex(0)// if(data.size() == 2) then fistIndex == 1000;
+                        vp_home.setCurrentItem(firstIndex)
                     },
                     {error -> showToast(error.getMessage().toString()) }
             )
