@@ -14,4 +14,8 @@ interface NetService{
     @GET("/mytest/app.html")
     fun getSplashInfo_Post(@Field("msg") msg : String, @Field("sign") sign:String) : Observable<SplashResponse>
 
+    @FormUrlEncoded
+    @POST("/mytest/app.html")
+    fun getHome(@Field("msg") msg : String, @Field("sign") sign:String) : Observable<HomeResponse>
+
 }

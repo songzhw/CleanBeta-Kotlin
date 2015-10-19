@@ -6,7 +6,7 @@
     <include layout="@layout/view_toolbar" android:id="@+id/topHome"/>
 
     <android.support.v4.widget.DrawerLayout
-        android:layout_width="match_parent" android:layout_height="match_parent">
+         android:layout_width="match_parent" android:layout_height="match_parent">
 
         <!-- content -->
         <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
