@@ -22,6 +22,8 @@
         <!--<activity android:name=".ui.HomeActivity"/>-->
         <activity android:name=".ui.WebViewActivity"
             android:process=":webview"/>
+        <activity android:name=".ui.PortraitDetailActivity"/>
+
     </application>
 
 </manifest>

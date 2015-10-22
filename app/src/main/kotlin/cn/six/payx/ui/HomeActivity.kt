@@ -1,6 +1,9 @@
 package cn.six.payx.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v7.widget.Toolbar
 import android.view.MotionEvent
 import android.view.View
@@ -91,10 +94,12 @@ public class HomeActivity : BaseActivity(){
         ViewObservable.clicks(llayHomeMenu)
             .subscribe{}
 
+        // the 5.x and 6.x will have a scene transition animation. 4.x has not.
         ViewObservable.clicks(rlayHomeMenuPortrait)
             .subscribe{ev: OnClickEvent ->
-                println("szw click menu top")
-
+                var opt = ActivityOptionsCompat.makeSceneTransitionAnimation(this, ivHomeMenuPortrait, "portraint_show")
+                var it = Intent(this, PortraitDetailActivity::class.java)
+                ActivityCompat.startActivity(this, it, opt.toBundle())
             }
 
 
