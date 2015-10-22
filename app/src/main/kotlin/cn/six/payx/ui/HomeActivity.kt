@@ -37,7 +37,7 @@ public class HomeActivity : BaseActivity(){
         adapter.data = emptyList()  // error：java.lang.ArithmeticException: divide by zero
         vp_home.adapter = adapter
 
-        var raw = hashMapOf("action" to "getHomeInfo")
+        var raw = hashMapOf("action" to "getIndexInfo")
         var req = BaseRequest(raw)
 
         RetrofitSingleton.getNetService()
@@ -46,12 +46,16 @@ public class HomeActivity : BaseActivity(){
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                     {resp : HomeResponse ->
-                        banners = resp.banners
-                        adapter.data = resp.banners
-                        adapter.notifyDataSetChanged()
+                        if(!resp.isSucc()){
+                            showToast(resp.msg)
+                        } else{
+                            banners = resp.banners
+                            adapter.data = resp.banners
+                            adapter.notifyDataSetChanged()
 
-                        var firstIndex = adapter.getFirstItemIndex(0)// if(data.size() == 2) then fistIndex == 1000;
-                        vp_home.setCurrentItem(firstIndex)
+                            var firstIndex = adapter.getFirstItemIndex(0)// if(data.size() == 2) then fistIndex == 1000;
+                            vp_home.setCurrentItem(firstIndex)
+                        }
                     },
                     {error -> showToast(error.getMessage().toString()) }
             )
@@ -68,7 +72,6 @@ public class HomeActivity : BaseActivity(){
                             val realIndex = currentIndex % banners .size()
                             var item = banners.get(realIndex)
                             var args = mapOf<String, String>("intent_webview_url" to item. bannerUrl)
-                            println("szw 000 url = "+item.bannerUrl)
                             jump(WebViewActivity::class. java, args)
                             return true
                         }

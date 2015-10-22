@@ -1,5 +1,7 @@
 package cn.six.payx.util
 
+import android.app.ActivityManager
+import android.content.Context
 import android.widget.EditText
 import android.widget.Toast
 import cn.six.payx.core.BaseApp
@@ -7,6 +9,17 @@ import cn.six.payx.core.BaseApp
 
 fun showToast(text : String){
     Toast.makeText(BaseApp.appContext, text, Toast.LENGTH_SHORT).show()
+}
+
+fun getProcessName(context: Context): String {
+    val pid = android.os.Process.myPid()
+    val mActivityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    for (appProcess in mActivityManager.getRunningAppProcesses()) {
+        if (appProcess.pid === pid) {
+            return appProcess.processName
+        }
+    }
+    return ""
 }
 
 fun EditText.string() : String {
