@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.widget.Toolbar
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewAnimationUtils
 import cn.six.payx.R
 import cn.six.payx.core.BaseActivity
 import cn.six.payx.entity.BannerItem
@@ -14,6 +15,8 @@ import cn.six.payx.util.jump
 import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_home.*
 import rx.android.schedulers.AndroidSchedulers
+import rx.android.view.OnClickEvent
+import rx.android.view.ViewObservable
 import rx.schedulers.Schedulers
 import kotlin.properties.Delegates
 
@@ -83,6 +86,17 @@ public class HomeActivity : BaseActivity(){
                 return false
             }
         })
+
+        // so clicking the menu, will not trigger the content click event.
+        ViewObservable.clicks(llayHomeMenu)
+            .subscribe{}
+
+        ViewObservable.clicks(rlayHomeMenuPortrait)
+            .subscribe{ev: OnClickEvent ->
+                println("szw click menu top")
+
+            }
+
 
     }
 }
