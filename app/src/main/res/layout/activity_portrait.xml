@@ -8,13 +8,15 @@
         android:transitionName="portraint_show"/>
     <View android:layout_width="fill_parent" android:layout_height="1dp" android:background="@color/color_divider"/>
 
-    <TextView android:layout_width="fill_parent" android:layout_height="90dp" android:paddingLeft="20dp"
-        android:text="拍照作头像" android:textSize="32dp" android:textColor="#000" android:gravity="center_vertical"
+    <TextView android:id="@+id/tvPortraitCamera"
+        android:layout_width="fill_parent" android:layout_height="90dp" android:paddingLeft="20dp"
+        android:text="take a picture" android:textSize="32dp" android:textColor="#000" android:gravity="center_vertical"
         />
     <View android:layout_width="fill_parent" android:layout_height="1dp" android:background="@color/color_divider"/>
 
-    <TextView android:layout_width="fill_parent" android:layout_height="90dp" android:paddingLeft="20dp"
-        android:text="从相册中提取" android:textSize="32dp" android:textColor="#000" android:gravity="center_vertical"
+    <TextView  android:id="@+id/tvPortraitGallery"
+        android:layout_width="fill_parent" android:layout_height="90dp" android:paddingLeft="20dp"
+        android:text="get a picture from album" android:textSize="32dp" android:textColor="#000" android:gravity="center_vertical"
         />
     <View android:layout_width="fill_parent" android:layout_height="1dp" android:background="@color/color_divider"/>
 

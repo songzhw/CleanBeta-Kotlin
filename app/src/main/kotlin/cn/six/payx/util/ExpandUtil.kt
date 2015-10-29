@@ -25,3 +25,7 @@ fun getProcessName(context: Context): String {
 fun EditText.string() : String {
     return this.getText()?.toString() ?: "" //this是指EditText对象。因为这是猴子补丁
 }
+
+fun dp2px(context: Context, dip: Float): Int {
+    return (context.resources.displayMetrics.density * dip).toInt()
+}
