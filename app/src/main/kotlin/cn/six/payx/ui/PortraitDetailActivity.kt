@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import cn.six.payx.R
 import cn.six.payx.core.BaseActivity
 import cn.six.payx.util.dp2px
+import cn.six.payx.util.saveBitmap
 import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_portrait.*
 import rx.android.view.ViewObservable
@@ -23,6 +24,11 @@ public class PortraitDetailActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_portrait)
+
+        var portrait = getPortrait()
+        if(portrait != null ){
+            ivPortraitShow.setImageBitmap(portrait)
+        }        
 
         //Pick the portrait picture from the Album
         ViewObservable.clicks(tvPortraitGallery)
@@ -59,6 +65,14 @@ public class PortraitDetailActivity : BaseActivity() {
             var extras = intent.extras
             var bitmap : Bitmap = extras.getParcelable("data")
             ivPortraitShow.setImageBitmap(bitmap)
+
+            // save the bitmap outside the main thread
+            Observable.just("save bitmap")
+                .observeOn(Schedulers.newThread())
+                .subscribe {
+                    println(" szw thread = ${Thread.currentThread().name}") //=> RxNewThreadScheduler-2
+                    saveBitmap(bitmap)
+                }
         }
 
     }

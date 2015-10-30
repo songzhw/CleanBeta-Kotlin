@@ -39,6 +39,11 @@ public class HomeActivity : BaseActivity(){
         toolbar.title = "  Home Page!!"
         toolbar.setNavigationIcon(R.drawable.ic_launcher)
 
+        var portrait = getPortrait()
+        if(portrait != null ){
+            ivHomeMenuPortrait.setImageBitmap(portrait)
+        }
+
         var adapter = HomePagerAdapter(this)
         adapter.data = emptyList()  // error：java.lang.ArithmeticException: divide by zero
         vp_home.adapter = adapter
