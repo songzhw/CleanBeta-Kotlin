@@ -37,8 +37,8 @@ public class SplashTest  implements IIdlingFlag {
 
     @Override
     public boolean isFinish() {
-        Log.d("szw", "SplashTest : isFinish = " + actvRule.getActivity().getIsFinishedSplash());
-        return actvRule.getActivity().getIsFinishedSplash();
+        Log.d("szw", "SplashTest : isFinish = " + actvRule.getActivity().isFinishedSplash());
+        return actvRule.getActivity().isFinishedSplash();
     }
     @Test
     public void checkCopyRight(){
