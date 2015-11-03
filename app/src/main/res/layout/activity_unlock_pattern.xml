@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gesturepwd_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#000"
+    android:orientation="vertical" >
+
+
+    <ImageView
+        android:id="@+id/ivUnlockPortrait"
+        android:layout_width="80.0dip"
+        android:layout_height="80.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dip"
+        android:background="@drawable/card_avatar"
+        android:padding="4.0dip"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_default_portrait" />
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40.0dip"
+        android:layout_marginRight="40.0dip"
+        android:layout_marginTop="30.0dip"
+        android:gravity="center_horizontal"
+        android:text="请输入手势密码"
+        android:textColor="@android:color/white"
+        android:shadowColor="#b3ffffff"
+        android:shadowRadius="1.0"
+        android:textSize="16.0sp" />
+
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40.0dip"
+        android:layout_marginRight="40.0dip"
+        android:layout_marginTop="4.0dip"
+        android:gravity="center_horizontal"
+        android:shadowColor="#b3ffffff"
+        android:shadowRadius="1.0"
+        android:text="5次失败后，需要重新登录。"
+        android:textColor="@android:color/white"
+        android:textSize="12.0sp"
+        android:visibility="invisible" />
+
+
+    <cn.six.payx.view.LockPatternView
+        android:id="@+id/lpvUnlock"
+        android:layout_width="280.0dip"
+        android:layout_height="280.0dip"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="5.0dip" />
+
+
+    <TextView
+        android:id="@+id/tvUnlockForget"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40.0dip"
+        android:gravity="center_horizontal"
+        android:text="忘记密码"
+        android:textColor="@android:color/white"
+        android:shadowColor="#e0ffffff"
+        android:shadowDy="1.0"
+        android:shadowRadius="1.0"
+        android:textSize="14.0sp" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="75.0dip"
+        android:layout_weight="1.0" />
+
+</LinearLayout>

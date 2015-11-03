@@ -50,7 +50,7 @@ public class SplashActivity : BaseActivity() {
         jumpObservable.asObservable()
                 .delay(2, TimeUnit.SECONDS)
                 .subscribe{
-                    jump(HomeActivity::class.java)
+                    jump(UnlockActivity::class.java)
                     this.finish()
                 }
 
