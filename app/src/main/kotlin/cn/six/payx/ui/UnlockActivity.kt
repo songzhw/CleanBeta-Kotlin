@@ -55,6 +55,7 @@ public class UnlockActivity : BaseActivity(), LockPatternView.OnPatternListener 
         var isMatched = LockPatternUtils(this).checkPattern(pattern)
         if(isMatched){
             jump(HomeActivity::class.java)
+            this.finish()
         } else {
             showToast("lock pattern error !!!")
         }
