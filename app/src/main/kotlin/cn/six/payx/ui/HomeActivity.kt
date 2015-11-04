@@ -108,5 +108,26 @@ public class HomeActivity : BaseActivity(){
             }
 
 
+        ViewObservable.clicks(btnHomeScan)
+            .subscribe{
+                //IntentIntegrator(this).initiateScan(); // go to the CaptureActivity(landscape)
+
+                // go to the CaptureActivity(portrait orientation)
+                var zxing = IntentIntegrator(this)
+                zxing.setCaptureActivity(VerticalCaptureActivity::class.java)
+                zxing.initiateScan()
+            }
+
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == IntentIntegrator.REQUEST_CODE){
+                // zxing succ
+                val contents = data?.getStringExtra(Intents.Scan.RESULT)
+                println("szw zxing result = ${contents}")
+            }
+        }
+    }
+
 }

@@ -10,9 +10,12 @@
          android:layout_width="match_parent" android:layout_height="match_parent">
 
         <!-- content -->
-        <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
             <android.support.v4.view.ViewPager android:id="@+id/vp_home" android:layout_width="fill_parent" android:layout_height="170dp"/>
-        </FrameLayout>
+
+            <ImageButton android:id="@+id/btnHomeScan" android:layout_width="80dp" android:layout_height="80dp" android:layout_margin="20dp"
+                android:src="@drawable/ic_zxing" android:background="@android:color/transparent" android:scaleType="fitXY"/>
+        </LinearLayout>
 
 
         <!-- menu -->
