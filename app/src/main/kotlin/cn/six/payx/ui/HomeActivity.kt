@@ -22,6 +22,7 @@ import rx.android.view.OnClickEvent
 import rx.android.view.ViewObservable
 import rx.schedulers.Schedulers
 import kotlin.properties.Delegates
+import cn.six.payx.util.JniUtil
 
 public class HomeActivity : BaseActivity(){
     //for clicking viewpager item
@@ -117,6 +118,13 @@ public class HomeActivity : BaseActivity(){
                 zxing.setCaptureActivity(VerticalCaptureActivity::class.java)
                 zxing.initiateScan()
             }
+
+
+        // jni test
+        println("szw ==================")
+        println("szw ======" + JniUtil.getKey() + "====")
+        println("szw ======" + JniUtil().getNo() + "====")
+        println("szw ==================")        
 
     }
 

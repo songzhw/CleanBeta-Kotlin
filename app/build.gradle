@@ -26,6 +26,12 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        // please also add "ndk.dir" in local.properties in your project
+        // e.g : ndk.dir=E\:\\android-ndk-r10e
+        ndk{
+            moduleName "firstNdk"
+        }        
     }
     buildTypes {
         release {
