@@ -118,7 +118,11 @@ public class HomeActivity : BaseActivity(){
                 zxing.setCaptureActivity(VerticalCaptureActivity::class.java)
                 zxing.initiateScan()
             }
-
+            
+        ViewObservable.clicks(tvHomeBankCards)
+            .subscribe{
+                jump(CardActivity::class.java)
+            }
 
         // jni test
         println("szw ==================")
