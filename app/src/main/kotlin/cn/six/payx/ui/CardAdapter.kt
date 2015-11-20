@@ -17,7 +17,7 @@ public class CardAdapter(var ctx : Context) : BaseAdapter(){
     }
 
     override fun getItem(position: Int): Any? {
-        return position
+        return data.get(position)
     }
 
     override fun getItemId(position: Int): Long {
