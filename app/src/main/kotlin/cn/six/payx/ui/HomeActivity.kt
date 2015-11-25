@@ -85,6 +85,12 @@ public class HomeActivity : BaseActivity(){
                 jump(CardActivity::class.java)
             }
 
+        ViewObservable.clicks(btnHomePayments)
+            .subscribe{
+                val type  = Random().nextInt(2).toString()
+                jump( PaymentsActivity::class.java,  mapOf("showType" to type)  )
+            }            
+
         // jni test
         println("szw ===============================================")
         println("szw ======" + JniUtil.getKey()  + "====")
