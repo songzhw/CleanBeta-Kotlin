@@ -97,6 +97,11 @@ public class HomeActivity : BaseActivity(){
         println("szw ======" + JniUtil().getNo() + "====")
         println("szw ===============================================")
 
+//        // cert test
+//        var certSign = CertUtil.getSign(this);
+//        var publicKey = CertUtil.getPublicKey(certSign);
+//        println("szw **** publicKey = ${publicKey} ****");
+
         presenter.initData()
 
     }
