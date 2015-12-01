@@ -29,6 +29,8 @@
             android:screenOrientation="portrait"
             />        
         <activity android:name=".ui.CardActivity"/>
+        <activity android:name=".ui.PaymentsActivity"/>
+        <activity android:name=".ui.TestRxActivity"/>
     </application>
 
 </manifest>
