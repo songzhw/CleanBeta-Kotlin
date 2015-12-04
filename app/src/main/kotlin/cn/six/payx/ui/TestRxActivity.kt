@@ -25,20 +25,27 @@ public class TestRxActivity : BaseActivity(){
 
     fun whenCache(v : View){
         tvShow.setText("")
-        var ret = presenter.getImage()
+        presenter.getImage()
 
     }
 
-    fun showCacheResult(str : String){
-        tvShow.setText("getImage() -- ${str}")
+    fun showCacheResult(method :String, str : String){
+        tvShow.setText("${method}() -- ${str}")
     }
 
     fun multiApi(v : View){
-
+        tvShow.setText("")
+        presenter.accessMultiApi()
     }
 
-    fun doubleClick(v : View){
+    fun subsequentApi( v : View){
+        tvShow.setText("")
+        presenter.subsequentApi()
+    }
 
+    fun complexCompute( v : View){
+        tvShow.setText("")
+        presenter.complexCompute()
     }
 
 }
