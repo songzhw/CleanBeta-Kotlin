@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView android:id="@+id/tvShow" android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:textSize="22dp" />
+
+    <TableLayout android:layout_width="fill_parent" android:layout_height="wrap_content">
+        <TableRow>
+            <Button android:id="@+id/btnCache" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="first From Cache" android:onClick="whenCache"/>
+            <Button android:id="@+id/btnMultiApi" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="multi api " android:onClick="multiApi"/>
+        </TableRow>
+
+        <TableRow>
+            <Button android:id="@+id/btnSubsequentApi" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="subsequent click" android:onClick="subsequentApi"/>
+            <Button android:id="@+id/btnComplexCompute" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="complex compute" android:onClick="complexCompute"/>
+        </TableRow>
+
+        <TableRow>
+            <Button android:id="@+id/btnDoubleClick" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="double click" android:onClick="doubleClick"/>
+            <Button android:id="@+id/btnBufferClick" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="buffer click" android:onClick="bufferClick"/>
+        </TableRow>
+        
+        
+    </TableLayout>
+</LinearLayout>
