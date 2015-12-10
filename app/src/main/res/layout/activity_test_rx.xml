@@ -28,7 +28,11 @@
             <Button android:id="@+id/btnBufferClick" android:layout_width="160dp" android:layout_height="42dp"
                     android:textSize="18dp" android:text="buffer click" android:onClick="bufferClick"/>
         </TableRow>
-        
-        
+
+        <TableRow>
+            <EditText android:id="@+id/etSearch" android:layout_width="fill_parent" android:layout_height="wrap_content"/>
+            <EditText android:id="@+id/etInputLimit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="numberDecimal"/>
+        </TableRow>
+
     </TableLayout>
 </LinearLayout>
