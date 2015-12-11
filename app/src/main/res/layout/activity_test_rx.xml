@@ -34,5 +34,10 @@
             <EditText android:id="@+id/etInputLimit" android:layout_width="fill_parent" android:layout_height="wrap_content" android:inputType="numberDecimal"/>
         </TableRow>
 
+        <TableRow>
+            <Button android:id="@+id/btnForm01" android:layout_width="160dp" android:layout_height="42dp"
+                    android:textSize="18dp" android:text="Confirm Form" android:enabled="false"/>
+        </TableRow>
+
     </TableLayout>
 </LinearLayout>

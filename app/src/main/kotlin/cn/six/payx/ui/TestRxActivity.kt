@@ -1,6 +1,7 @@
 package cn.six.payx.ui
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.MotionEvent
 import android.view.View
 import cn.six.payx.R
@@ -8,6 +9,8 @@ import cn.six.payx.core.BaseActivity
 import cn.six.payx.presenter.TestRxPresenter
 import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_test_rx.*
+import rx.Observable
+import rx.android.schedulers.AndroidSchedulers
 import rx.android.view.ViewObservable
 import rx.android.widget.OnTextChangeEvent
 import rx.android.widget.WidgetObservable
@@ -19,6 +22,7 @@ import kotlin.properties.Delegates
 // * Network (e.g. Retrofit)
 // * Complex data handling (map, filter, distince, take, reduce ...)
 // * see : http://blog.csdn.net/lzyzsd/article/details/50120801
+
 public class TestRxActivity : BaseActivity(){
     var presenter : TestRxPresenter by Delegates.notNull()
 
@@ -40,10 +44,38 @@ public class TestRxActivity : BaseActivity(){
         // limition on the input
         limitInput()
 
+        // form validation
+        validForm()
+
     }
 
+    fun validForm(){
+        var et1Valid = WidgetObservable.text(etSearch)
+            .map{ it. text().toString()}
+        var et2Valid = WidgetObservable.text(etInputLimit)
+                .map{ it. text().toString()}
+
+        Observable.combineLatest(et1Valid, et2Valid){s1, s2 ->
+            !TextUtils.isEmpty(s1) && !TextUtils.isEmpty(s2)
+        }.subscribe{
+            btnForm01.isEnabled = it
+        }
+    }
+
+    /**
+    A typical example of this is instant search result boxes. As you type the word "Bruce Lee",
+    you don't want to execute searches for B, Br, Bru, Bruce, Bruce, Bruce L ... etc.
+    But rather intelligently wait for a couple of moments, make sure the user has finished typing the whole word,
+    and then shoot out a single call for "Bruce Lee".
+     * */
     fun debounceSearch(){
-//        WidgetObservable.text(etSearch)
+        WidgetObservable.text(etSearch)
+            .debounce(400, TimeUnit.MILLISECONDS)
+            .map{ it.text().toString()}
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({println("szw onNext($it)")},
+                    {println("szw onError($it)")},
+                    {println("szw onComplete()")})
     }
 
     // 1. You can only input two decimal in this EditText
@@ -73,13 +105,15 @@ public class TestRxActivity : BaseActivity(){
                     etInputLimit.setSelection(ret.length)
                 }
             }
+
     }
 
     fun noStickyClick(){
         ViewObservable.clicks(btnDoubleClick)
+//                .debounce(2, TimeUnit.SECONDS)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe{
-                    println("click btnDoubleClick ! ${System.currentTimeMillis()}")
+                    println("szw click btnDoubleClick ! ${System.currentTimeMillis()}")
                 }
     }
 
