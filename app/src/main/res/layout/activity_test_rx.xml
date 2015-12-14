@@ -37,6 +37,7 @@
         <TableRow>
             <Button android:id="@+id/btnForm01" android:layout_width="160dp" android:layout_height="42dp"
                     android:textSize="18dp" android:text="Confirm Form" android:enabled="false"/>
+            <TextView android:id="@+id/tvFormResult" android:text="what" android:gravity="center" android:textSize="23dp"/>
         </TableRow>
 
     </TableLayout>

@@ -14,6 +14,8 @@ import rx.android.schedulers.AndroidSchedulers
 import rx.android.view.ViewObservable
 import rx.android.widget.OnTextChangeEvent
 import rx.android.widget.WidgetObservable
+import rx.functions.Action1
+import rx.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -22,7 +24,6 @@ import kotlin.properties.Delegates
 // * Network (e.g. Retrofit)
 // * Complex data handling (map, filter, distince, take, reduce ...)
 // * see : http://blog.csdn.net/lzyzsd/article/details/50120801
-
 public class TestRxActivity : BaseActivity(){
     var presenter : TestRxPresenter by Delegates.notNull()
 
@@ -47,6 +48,42 @@ public class TestRxActivity : BaseActivity(){
         // form validation
         validForm()
 
+        // calculate the result
+        calculateFormResult()
+    }
+
+    fun calculateFormResult(){
+        var et1Valid = WidgetObservable.text(etSearch)
+                .map{ it. text().toString()}
+        var et2Valid = WidgetObservable.text(etInputLimit)
+                .map{ it. text().toString()}
+
+        Observable.combineLatest(et1Valid, et2Valid){s1, s2 ->
+            try{
+                s1.toInt() + s2.toInt()
+            } catch (e : Exception){
+                " -- "
+            }
+        }.subscribe{
+            tvFormResult.setText("$it")
+        }
+
+        /*
+        Another way (is not as good as the combineLatest()):
+
+        var publisher: PublishSubject<Float> = PublishSubject.create<Float>();
+        publisher.asObservable().subscribe{
+            tvFormResult.setText("$it")
+        };
+
+        var et3Valid = WidgetObservable.text(etSearch)
+                .map{ it. text().toString().toFloat()}
+                .subscribe {publisher.onNext(s1.Float() + s2.Float())}
+        var et4Valid = WidgetObservable.text(etInputLimit)
+                .map{ it. text().toString().toFloat()}
+                .subscribe {publisher.onNext(s1.Float() + s2.Float())}
+
+        */
     }
 
     fun validForm(){
