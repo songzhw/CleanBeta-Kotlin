@@ -40,5 +40,10 @@
             <TextView android:id="@+id/tvFormResult" android:text="what" android:gravity="center" android:textSize="23dp"/>
         </TableRow>
 
+
+        <TableRow>
+            <Button android:id="@+id/btnPolling" android:textSize="18dp" android:text="Polling" android:onClick="clickPolling"/>
+        </TableRow>
+
     </TableLayout>
 </LinearLayout>

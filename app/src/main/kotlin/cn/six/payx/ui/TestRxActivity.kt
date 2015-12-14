@@ -10,12 +10,15 @@ import cn.six.payx.presenter.TestRxPresenter
 import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_test_rx.*
 import rx.Observable
+import rx.Subscription
 import rx.android.schedulers.AndroidSchedulers
 import rx.android.view.ViewObservable
 import rx.android.widget.OnTextChangeEvent
 import rx.android.widget.WidgetObservable
 import rx.functions.Action1
+import rx.schedulers.Schedulers
 import rx.subjects.PublishSubject
+import rx.subscriptions.CompositeSubscription
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
 
@@ -24,6 +27,10 @@ import kotlin.properties.Delegates
 // * Network (e.g. Retrofit)
 // * Complex data handling (map, filter, distince, take, reduce ...)
 // * see : http://blog.csdn.net/lzyzsd/article/details/50120801
+
+/*
+
+*/
 public class TestRxActivity : BaseActivity(){
     var presenter : TestRxPresenter by Delegates.notNull()
 
@@ -229,5 +236,40 @@ public class TestRxActivity : BaseActivity(){
     }
 
 
+    var count : Int = 0
+    fun clickPolling( v : View){
+        count = 0
+        var onSubp = Observable.OnSubscribe<String>() {
+            Schedulers.newThread()
+                .createWorker()
+                .schedulePeriodically( //(action, long initialDelay, long period, TimeUnit unit)
+                        {it.onNext(increseCount())},
+                         0, 1, TimeUnit.SECONDS
+                )
+        }
+        var observable = Observable.create(onSubp)
+        var subp = observable.take(10) // or filter() to depends on an outter variable
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{ tvShow.setText("Polling $it")}
+
+
+        var subscriptions = CompositeSubscription()
+        subscriptions.add(subp);
+
+
+    }
+
+    fun increseCount() : String{
+        count ++
+        return count.toString()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // TODO
+        // [onCreate]  subscription = Observable.just(..);
+        // [onDestory] subscription.unsubscribe();
+    }
 
 }
