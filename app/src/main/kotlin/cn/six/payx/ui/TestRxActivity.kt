@@ -1,23 +1,21 @@
 package cn.six.payx.ui
 
 import android.os.Bundle
+import android.os.SystemClock
 import android.text.TextUtils
-import android.view.MotionEvent
 import android.view.View
 import cn.six.payx.R
 import cn.six.payx.core.BaseActivity
+import cn.six.payx.entity.HomeResponse
+import cn.six.payx.net.RetrofitSingleton
 import cn.six.payx.presenter.TestRxPresenter
-import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_test_rx.*
 import rx.Observable
-import rx.Subscription
+import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
 import rx.android.view.ViewObservable
-import rx.android.widget.OnTextChangeEvent
 import rx.android.widget.WidgetObservable
-import rx.functions.Action1
 import rx.schedulers.Schedulers
-import rx.subjects.PublishSubject
 import rx.subscriptions.CompositeSubscription
 import java.util.concurrent.TimeUnit
 import kotlin.properties.Delegates
@@ -29,8 +27,9 @@ import kotlin.properties.Delegates
 // * see : http://blog.csdn.net/lzyzsd/article/details/50120801
 
 /*
-
+more details : https://songzhw.github.io
 */
+@Deprecated("this is just a demo class of RxJava. It's not MVP strictly. ")
 public class TestRxActivity : BaseActivity(){
     var presenter : TestRxPresenter by Delegates.notNull()
 
@@ -239,11 +238,11 @@ public class TestRxActivity : BaseActivity(){
     var count : Int = 0
     fun clickPolling( v : View){
         count = 0
-        var onSubp = Observable.OnSubscribe<String>() {
+        var onSubp = Observable.OnSubscribe<String>() { obs ->
             Schedulers.newThread()
                 .createWorker()
                 .schedulePeriodically( //(action, long initialDelay, long period, TimeUnit unit)
-                        {it.onNext(increseCount())},
+                        {obs.onNext(increseCount())},
                          0, 1, TimeUnit.SECONDS
                 )
         }
@@ -253,10 +252,8 @@ public class TestRxActivity : BaseActivity(){
             .subscribe{ tvShow.setText("Polling $it")}
 
 
-        var subscriptions = CompositeSubscription()
-        subscriptions.add(subp);
-
-
+//        var subscriptions = CompositeSubscription()
+//        subscriptions.add(subp);
     }
 
     fun increseCount() : String{
@@ -264,6 +261,75 @@ public class TestRxActivity : BaseActivity(){
         return count.toString()
     }
 
+
+    fun clickPolling2( v : View){
+        // init
+        count = 0
+        var pollintInterval = 1000L
+
+        // start polling
+        Observable.interval(0, pollintInterval, TimeUnit.MILLISECONDS)
+            .flatMap {
+                RetrofitSingleton.getNetService()
+                    .getHome("req.msg", "req.sign")
+                    .doOnError { println("szw error $it}") }
+                    .onErrorResumeNext { Observable.empty() }
+            }
+            .filter { /* check if it is a valid state */ true }
+            .take(1)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe{ resp : HomeResponse ->
+                // state = resp.state
+                // pollintInterval = resp.interval
+            }
+
+        /*
+        onErrorResumeNext()
+             * Instructs an Observable to pass control to another Observable rather than invoking
+            * {@link Observer#onError onError} if it encounters an error.
+        */
+    }
+
+    fun clickPolling3( v : View) {
+        // delay(time, unit) is not a static method !
+        Observable.timer(2L, TimeUnit.SECONDS)
+                .subscribe { println("szw timer 2") }
+
+        /*
+        timer()
+        Returns an Observable that emits one item after a specified delay, and then completes.
+
+        delay()
+        Returns an Observable that emits the items emitted by the source Observable shifted forward in time by a specified delay. Error notifications from the source Observable are not delayed.
+        */
+    }
+
+    fun clickTimeout(v : View) {
+        Observable.create<String>{
+                    println("szw [a]start 5s")
+                    it.onNext("[a] 5 s")
+                    SystemClock.sleep(5000)
+                    it.onCompleted()
+                }
+        .timeout(2, TimeUnit.SECONDS, Observable.create<String>{
+                                                println("szw timeout");
+                                                it.onCompleted()
+                                                // it.onError(Exception("test")
+                                            })
+        .subscribeOn(Schedulers.newThread())
+        .observeOn(AndroidSchedulers.mainThread())
+        .subscribe(
+                {println("szw onNext $it")},
+                {println("szw onError $it")},
+                {println("szw onComplete")}
+                )
+/*
+14:01:45.047 I/System.out: szw [a]start 5s
+14:01:45.057 I/System.out: szw onNext [a] 5 s
+14:01:47.047 I/System.out: szw timeout
+14:01:47.047 I/System.out: szw onComplete
+ */
+    }
 
     override fun onDestroy() {
         super.onDestroy()

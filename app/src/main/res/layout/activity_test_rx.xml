@@ -43,6 +43,12 @@
 
         <TableRow>
             <Button android:id="@+id/btnPolling" android:textSize="18dp" android:text="Polling" android:onClick="clickPolling"/>
+            <Button android:id="@+id/btnPolling2" android:textSize="18dp" android:text="Polling2" android:onClick="clickPolling2"/>
+        </TableRow>
+
+        <TableRow>
+            <Button android:id="@+id/btnPolling3" android:textSize="18dp" android:text="Polling3" android:onClick="clickPolling3"/>
+            <Button android:id="@+id/btnTimeout" android:textSize="18dp" android:text="TimeOut" android:onClick="clickTimeout"/>
         </TableRow>
 
     </TableLayout>
