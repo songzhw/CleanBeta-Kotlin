@@ -16,9 +16,16 @@ import rx.schedulers.Schedulers
 import rx.subjects.BehaviorSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.properties.Delegates
 
 public class SplashActivity : BaseActivity() {
     val jumpObservable : BehaviorSubject<Void> = BehaviorSubject.create()
+    var isFinishedSplash = false
+
+    // show how to delegate a lazy member
+    val hello : String by lazy{
+        "hello kotlin" // resource.getString(R.string.hello)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,12 +55,12 @@ public class SplashActivity : BaseActivity() {
                         })
 
         jumpObservable.asObservable()
-                .delay(2, TimeUnit.SECONDS)
-                .subscribe{
-                    jump(UnlockActivity::class.java)
-                    this.finish()
-                }
-
+            .delay(2, TimeUnit.SECONDS)
+            .subscribe{
+                isFinishedSplash = true
+                jump(UnlockActivity::class.java)
+                this.finish()
+            }
 
     }
 }
