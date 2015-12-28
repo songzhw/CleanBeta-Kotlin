@@ -89,7 +89,12 @@ public class HomeActivity : BaseActivity(){
             .subscribe{
                 val type  = Random().nextInt(2).toString()
                 jump( PaymentsActivity::class.java,  mapOf("showType" to type)  )
-            }            
+            }    
+
+        ViewObservable.clicks(btnHomeBalance)
+            .subscribe{
+                jump(BalanceActivity::class.java)
+            }                    
 
         // jni test
         println("szw ===============================================")
