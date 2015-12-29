@@ -8,12 +8,14 @@ import cn.six.payx.core.BaseActivity
 import cn.six.payx.presenter.BalanceLPresenter
 import cn.six.payx.presenter.BalanceMPresenter
 import cn.six.payx.presenter.IBalancePresenter
-import cn.six.payx.util.authen
-import cn.six.payx.util.fingerMgr
-import cn.six.payx.util.onPermitted
+import cn.six.payx.util.*
 import kotlinx.android.synthetic.activity_balance.*
 import kotlin.properties.Delegates
 
+
+// Fingerprint with Kotlin
+// 1. cannot override the existing method in a system class. Members always win!
+// 2. fingerMgr will be a lazy property. (the crash log tells me).
 public class BalanceActivity : BaseActivity(){
     var presenter : IBalancePresenter by Delegates.notNull()
 
@@ -21,10 +23,10 @@ public class BalanceActivity : BaseActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_balance)
 
-        if(Build.VERSION.SDK_INT < 23){
-            presenter = BalanceLPresenter(this)
-        } else {
+        if(Build.VERSION.SDK_INT >= 23 && this.hasFingerprintHardware){
             presenter = BalanceMPresenter(this)
+        } else { // (SDK_INT < 23) || (>=23 but has no fingerprint sensor)
+            presenter = BalanceLPresenter(this)
         }
         presenter.init()
 
@@ -56,5 +58,22 @@ public class BalanceActivity : BaseActivity(){
         tvBalance.setOnClickListener{
             tvBalance.setText("$ ${balance}")
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if(Build.VERSION.SDK_INT >= 23 && this.hasFingerprintHardware && this.hasFingerprints){
+            refreshViewM(presenter.model)
+        }
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(Build.VERSION.SDK_INT >= 23 && this.hasFingerprintHardware){
+            tvBalance.setText("$ **.**")
+            tvBalanceInfo.setText("Your balance is encrypted. \nTouch the fingerprint zone to see it.....")
+        }
+
     }
 }
