@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 buildscript {
-    ext.kotlin_version = '1.0.0-beta-1038'
+    ext.kotlin_version = '1.0.0-beta-1103'
     repositories {
         mavenCentral()
     }
@@ -20,46 +20,63 @@ android {
     compileSdkVersion 23
     buildToolsVersion "23.0.1"
 
+    signingConfigs {
+        atest {
+            storeFile file("debug.keystore")
+            storePassword "123!@#qwe"
+            keyAlias "forget"
+            keyPassword "123!@#qwe"
+        }
+    }
+
     defaultConfig {
         applicationId "cn.six.payx"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        // please also add "ndk.dir" in local.properties in your project
-        // e.g : ndk.dir=E\:\\android-ndk-r10e
         ndk{
             moduleName "firstNdk"
-        }        
+        }
+
+
     }
     buildTypes {
         release {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.atest
         }
     }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
+    }
+    packagingOptions {
+        exclude 'LICENSE.txt'
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:appcompat-v7:23.1.0'
 
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     compile 'com.squareup.retrofit:retrofit:1.9.0'
 
-    compile 'io.reactivex:rxjava:1.0.16'
-    compile 'io.reactivex:rxandroid:0.25.0'
-
-    // zxing
-    compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
-    compile 'com.google.zxing:core:3.2.1'    
+    compile 'io.reactivex:rxandroid:1.0.0'
+    compile 'io.reactivex:rxjava:1.1.0'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.3.0'
 
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
 
+    compile 'com.journeyapps:zxing-android-embedded:3.0.3@aar'
+    compile 'com.google.zxing:core:3.2.1'
+
+    androidTestCompile 'com.android.support.test:runner:0.4'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
+    androidTestCompile 'com.android.support:support-annotations:23.1.0'
 }

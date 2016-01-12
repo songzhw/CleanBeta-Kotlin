@@ -13,8 +13,8 @@ import kotlinx.android.synthetic.activity_test_rx.*
 import rx.Observable
 import rx.Observer
 import rx.android.schedulers.AndroidSchedulers
-import rx.android.view.ViewObservable
-import rx.android.widget.WidgetObservable
+import com.jakewharton.rxbinding.view.RxView
+import com.jakewharton.rxbinding.widget.RxTextView
 import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import java.util.concurrent.TimeUnit
@@ -59,9 +59,9 @@ public class TestRxActivity : BaseActivity(){
     }
 
     fun calculateFormResult(){
-        var et1Valid = WidgetObservable.text(etSearch)
+        var et1Valid = RxTextView.textChangeEvents(etSearch)
                 .map{ it. text().toString()}
-        var et2Valid = WidgetObservable.text(etInputLimit)
+        var et2Valid = RxTextView.textChangeEvents(etInputLimit)
                 .map{ it. text().toString()}
 
         Observable.combineLatest(et1Valid, et2Valid){s1, s2 ->
@@ -82,10 +82,10 @@ public class TestRxActivity : BaseActivity(){
             tvFormResult.setText("$it")
         };
 
-        var et3Valid = WidgetObservable.text(etSearch)
+        var et3Valid = RxTextView.textChangeEvents(etSearch)
                 .map{ it. text().toString().toFloat()}
                 .subscribe {publisher.onNext(s1.Float() + s2.Float())}
-        var et4Valid = WidgetObservable.text(etInputLimit)
+        var et4Valid = RxTextView.textChangeEvents(etInputLimit)
                 .map{ it. text().toString().toFloat()}
                 .subscribe {publisher.onNext(s1.Float() + s2.Float())}
 
@@ -93,9 +93,9 @@ public class TestRxActivity : BaseActivity(){
     }
 
     fun validForm(){
-        var et1Valid = WidgetObservable.text(etSearch)
+        var et1Valid = RxTextView.textChangeEvents(etSearch)
             .map{ it. text().toString()}
-        var et2Valid = WidgetObservable.text(etInputLimit)
+        var et2Valid = RxTextView.textChangeEvents(etInputLimit)
                 .map{ it. text().toString()}
 
         Observable.combineLatest(et1Valid, et2Valid){s1, s2 ->
@@ -112,7 +112,7 @@ public class TestRxActivity : BaseActivity(){
     and then shoot out a single call for "Bruce Lee".
      * */
     fun debounceSearch(){
-        WidgetObservable.text(etSearch)
+        RxTextView.textChangeEvents(etSearch)
             .debounce(400, TimeUnit.MILLISECONDS)
             .map{ it.text().toString()}
             .observeOn(AndroidSchedulers.mainThread())
@@ -124,7 +124,7 @@ public class TestRxActivity : BaseActivity(){
     // 1. You can only input two decimal in this EditText
     // 2. and EditText will add 0 in the first position if you input "." at first
     fun limitInput(){
-        WidgetObservable.text(etInputLimit)
+        RxTextView.textChangeEvents(etInputLimit)
             .map { it.text().toString() }
             .subscribe {
                 if(it.startsWith(".")){
@@ -133,7 +133,7 @@ public class TestRxActivity : BaseActivity(){
                 }
             }
 
-        WidgetObservable.text(etInputLimit)
+        RxTextView.textChangeEvents(etInputLimit)
             .map { it.text().toString() }
             .filter{ str : String ->
                 var pointIndex = str.indexOf(".")
@@ -152,7 +152,7 @@ public class TestRxActivity : BaseActivity(){
     }
 
     fun noStickyClick(){
-        ViewObservable.clicks(btnDoubleClick)
+        RxView.clicks(btnDoubleClick)
 //                .debounce(2, TimeUnit.SECONDS)
                 .throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe{

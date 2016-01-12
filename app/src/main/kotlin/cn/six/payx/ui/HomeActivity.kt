@@ -20,7 +20,7 @@ import com.google.zxing.client.android.Intents
 import com.google.zxing.integration.android.IntentIntegrator
 import kotlinx.android.synthetic.activity_home.*
 import rx.android.view.OnClickEvent
-import rx.android.view.ViewObservable
+import com.jakewharton.rxbinding.view.RxView
 import kotlin.properties.Delegates
 
 public class HomeActivity : BaseActivity(){
@@ -58,10 +58,10 @@ public class HomeActivity : BaseActivity(){
         })
 
         // so clicking the menu, will not trigger the content click event.
-        ViewObservable.clicks(llayHomeMenu)
+        RxView.clicks(llayHomeMenu)
             .subscribe{}
 
-        ViewObservable.clicks(rlayHomeMenuPortrait)
+        RxView.clicks(rlayHomeMenuPortrait)
             .subscribe{ev: OnClickEvent ->
                 var opt = ActivityOptionsCompat.makeSceneTransitionAnimation(this, ivHomeMenuPortrait, "portraint_show")
                 var it = Intent(this, PortraitDetailActivity::class.java)
@@ -70,7 +70,7 @@ public class HomeActivity : BaseActivity(){
 
 
 
-        ViewObservable.clicks(btnHomeScan)
+        RxView.clicks(btnHomeScan)
             .subscribe{
 //                IntentIntegrator(this).initiateScan(); // go to the CaptureActivity(landscape)
 
@@ -80,18 +80,18 @@ public class HomeActivity : BaseActivity(){
                 zxing.initiateScan()
             }
 
-        ViewObservable.clicks(tvHomeBankCards)
+        RxView.clicks(tvHomeBankCards)
             .subscribe{
                 jump(CardActivity::class.java)
             }
 
-        ViewObservable.clicks(btnHomePayments)
+        RxView.clicks(btnHomePayments)
             .subscribe{
                 val type  = Random().nextInt(2).toString()
                 jump( PaymentsActivity::class.java,  mapOf("showType" to type)  )
             }    
 
-        ViewObservable.clicks(btnHomeBalance)
+        RxView.clicks(btnHomeBalance)
             .subscribe{
                 jump(BalanceActivity::class.java)
             }                    

@@ -14,7 +14,7 @@ import cn.six.payx.util.dp2px
 import cn.six.payx.util.saveBitmap
 import cn.six.payx.util.showToast
 import kotlinx.android.synthetic.activity_portrait.*
-import rx.android.view.ViewObservable
+import com.jakewharton.rxbinding.view.RxView
 
 public class PortraitDetailActivity : BaseActivity() {
     val REQ_CODE_TAKE_PICTURE = 21
@@ -31,7 +31,7 @@ public class PortraitDetailActivity : BaseActivity() {
         }        
 
         //Pick the portrait picture from the Album
-        ViewObservable.clicks(tvPortraitGallery)
+        RxView.clicks(tvPortraitGallery)
             .subscribe{
                 if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
                     try {
